@@ -1,0 +1,1 @@
+# RSS Parser - Semestral work
