@@ -8,6 +8,15 @@ from flask import Flask
 app = Flask(__name__)
 
 
+def register_blueprints():
+    app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(api, url_prefix='/api')
+
+
+def register_exceptions():
+    app.register_blueprint(exception)
+
+
 def get_articles(url):
     parser = RssParser()
     reader = WebReader()
@@ -16,9 +25,8 @@ def get_articles(url):
 
 
 def main():
-    app.register_blueprint(exception)
-    app.register_blueprint(views, url_prefix='/')
-    app.register_blueprint(api, url_prefix='/api')
+    register_exceptions()
+    register_blueprints()
     data = get_articles("https://www.sme.sk/rss-title")
     print("Started application.")
     return app
