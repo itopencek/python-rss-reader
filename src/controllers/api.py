@@ -1,6 +1,6 @@
-from flask import Blueprint, request, abort
+from flask import Blueprint, request
 
-from src.controller.exceptions.api import APIexception
+from src.models.exceptions.api import APIexception
 
 api = Blueprint('api', __name__)
 
@@ -19,10 +19,10 @@ def get_articles(site):
 def post_site(name):
     """
     Adds site to database.
-    Must be valid.
+    Must be valid.s
     :param name: name of the site
     :return:
     """
     website = request.args.get('website', default="", type="str")
     if website == "":
-        raise APIexception
+        raise APIexception('website')
