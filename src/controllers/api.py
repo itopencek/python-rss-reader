@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from src.models.exceptions.api import APIexception
+from src.models.exceptions.api import WrongParamException
 
 api = Blueprint('api', __name__)
 
@@ -25,4 +25,4 @@ def post_site(name):
     """
     website = request.args.get('website', default="", type="str")
     if website == "":
-        raise APIexception('website')
+        raise WrongParamException('website')
