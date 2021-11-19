@@ -11,8 +11,8 @@ class Database:
     def __del__(self):
         self.df.to_csv(self.PATH)
 
-    def get_by_name(self, name):
-        return self.df.get(name)
+    def get_by_column(self, column, name):
+        return self.df.loc[self.df[column] == name]
 
     def insert(self, row):
         self.df = self.df.append(row, ignore_index=True)
@@ -20,7 +20,5 @@ class Database:
     def write_to_file(self):
         self.df.to_csv(self.PATH)
 
-    def exists(self, key):
-        if self.df.get(key, False):
-            return True
-        return False
+    def exists(self, column, key):
+        return not self.df.loc[self.df[column] == key].empty
