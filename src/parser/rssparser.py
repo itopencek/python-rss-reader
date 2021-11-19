@@ -38,7 +38,7 @@ class RssParser(Parser):
                    'url': url, 'source': source}
             data_frame = data_frame.append(row, ignore_index=True)
 
-        return data_frame
+        return data_frame.to_dict(orient="records")
 
     def __next_id(self):
         """

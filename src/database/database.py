@@ -12,7 +12,7 @@ class Database:
         self.df.to_csv(self.PATH)
 
     def get_by_column(self, column, name):
-        return self.df.loc[self.df[column] == name]
+        return self.df.loc[self.df[column] == name].to_dict(orient="list")
 
     def insert(self, row):
         self.df = self.df.append(row, ignore_index=True)

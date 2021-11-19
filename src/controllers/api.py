@@ -2,18 +2,25 @@ from flask import Blueprint, request, jsonify
 
 from src.database.sitesdao import SitesDao
 from src.models.exceptions.api import WrongParamException
+from src.parser.rssparser import RssParser
+from src.reader.webreader import WebReader
 
 api = Blueprint('api', __name__)
 
 
-@api.route('/get/articles/<site>', methods=['GET'])
-def get_articles(site):
+@api.route('/get/articles/<name>', methods=['GET'])
+def get_articles(name):
     """
     Returns articles for given <site>.
     Site must be already in database.
-    :param site: site name to get articles from
+    :param name: site name to get articles from
     :return:
     """
+    sites_dao = SitesDao()
+    site = sites_dao.get_by_column('name', name)
+    html = WebReader().read(site['url'][0])
+    parsed = RssParser().parse(html)
+    return jsonify(parsed), 200
 
 
 @api.route('/add/site/<name>', methods=['POST'])

@@ -17,16 +17,8 @@ def register_exceptions():
     app.register_blueprint(exception)
 
 
-def get_articles(url):
-    parser = RssParser()
-    reader = WebReader()
-    website = reader.read(url)
-    return parser.parse(website).values
-
-
 def main():
     register_exceptions()
     register_blueprints()
-    data = get_articles("https://www.sme.sk/rss-title")
     print("Started application.")
     return app
