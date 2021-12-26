@@ -1,4 +1,4 @@
-from src.app import main
+from ArticleParserApp import main
 
 app = main()
 

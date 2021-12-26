@@ -1,6 +1,16 @@
 import pandas
-import xml.etree.ElementTree as ET
-from src.parser.parser import Parser
+import xml.etree.ElementTree as ElementTree
+
+
+class Parser:
+    def parse(self, data):
+        """
+        Abstract method, which parses data.
+
+        :param data: data, which needs to be parsed
+        :return: parsed data
+        """
+        pass
 
 
 class RssParser(Parser):
@@ -26,7 +36,7 @@ class RssParser(Parser):
         :return: Pandas data_frame
         """
         data_frame = self.__get_data_frame()
-        root = ET.fromstring(data)
+        root = ElementTree.fromstring(data)
         channel = root.find("channel")
         source = channel.find("link").text
         for item in channel.findall("item"):
@@ -47,4 +57,3 @@ class RssParser(Parser):
         to_return = self.next_id
         self.next_id += 1
         return to_return
-

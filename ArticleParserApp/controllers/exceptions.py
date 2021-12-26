@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 
-from src.models.exceptions.api import WrongParamException
+from ArticleParserApp.database.models.exceptions.api import WrongParamException
 
 exception = Blueprint('exception', __name__)
 

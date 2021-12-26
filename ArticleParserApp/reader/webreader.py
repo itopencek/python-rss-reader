@@ -1,8 +1,21 @@
 from http.client import HTTPException
 from urllib.error import HTTPError, URLError
 
-from src.reader.reader import Reader
 from urllib.request import urlopen
+
+
+class Reader:
+    """
+    Abstract class to read data from specific source and then returning it.
+    """
+    def read(self, src):
+        """
+        Reads data from source, which it then returns.
+
+        :param src: source to read data from
+        :return: read data
+        """
+        pass
 
 
 class WebReader(Reader):
