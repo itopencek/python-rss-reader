@@ -1,8 +1,5 @@
 from ArticleParserApp.controllers.exceptions import exception
-from ArticleParserApp.controllers.views import views
-from ArticleParserApp.controllers.api import api
-from ArticleParserApp.parser.rssparser import RssParser
-from ArticleParserApp.reader.webreader import WebReader
+from ArticleParserApp.parser.parser import RssParser
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
@@ -14,6 +11,9 @@ DB_NAME = 'database.db'
 
 
 def register_blueprints():
+    from ArticleParserApp.controllers.views import views
+    from ArticleParserApp.controllers.api import api
+
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(api, url_prefix='/api')
 
@@ -35,6 +35,7 @@ def create_database():
 
 
 def main():
+    from ArticleParserApp.database.models.models import Site, Article
     create_database()
     register_exceptions()
     register_blueprints()
