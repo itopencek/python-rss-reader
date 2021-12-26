@@ -3,11 +3,13 @@ from ArticleParserApp.parser.parser import RssParser
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
+import pandas as pd
 
 app = Flask(__name__)
 db = SQLAlchemy()
 DB_PATH = 'sqlite:///database/database.db'
 DB_NAME = 'database.db'
+df_articles = None
 
 
 def register_blueprints():
@@ -23,6 +25,7 @@ def register_exceptions():
 
 
 def create_database():
+    global df_articles
     app.config['SECRET_KEY'] = 'very secret key'
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_PATH
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -32,6 +35,10 @@ def create_database():
         print('Created Database.')
     else:
         print('Database already exists.')
+    # set up pandas df
+    with app.app_context():
+        df_articles = pd.read_sql('SELECT * FROM article', con=db.engine)
+    print("Set up pandas DataFrame.")
 
 
 def main():
