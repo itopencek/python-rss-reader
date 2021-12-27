@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, request
 
 from ArticleParserApp.database.models.exceptions.api import WrongParamException
-from ArticleParserApp.database.models.models import Site, Article
-from ArticleParserApp import db, RssParser
-from ArticleParserApp.parser.reader import WebReader
+from ArticleParserApp.database.models.models import Site
+from ArticleParserApp.services.article import save_articles_from_site, get_articles_from_site
+from ArticleParserApp.services.site import get_site_from_name, add_site
 
 api = Blueprint('api', __name__)
 
@@ -14,14 +14,11 @@ def get_articles(name):
     Returns articles for given site name.
     Site must be already in database. Otherwise, WrongParamException is raised.
     :param name: site name to get articles from
-    :return: articles
+    :return: articles with status 200
     """
-    site = Site.query.filter_by(name=name).first()
-    if site is None:
-        raise WrongParamException('name')
+    articles = get_articles_from_site(name)
 
-    parsed = parse_articles(site.url)
-    return jsonify(parsed), 200
+    return jsonify(articles), 200
 
 
 @api.route('/articles/<name>', methods=['PUT'])
@@ -29,27 +26,26 @@ def save_articles(name):
     """
     Saves articles from site to database.
     :param name: site name to use
+    :return: site with status 200
     """
     site = Site.query.filter_by(name=name).first()
     if site is None:
         raise WrongParamException('name')
 
-    articles = parse_articles(site.url)
-    for article in articles:
-        if Article.query.filter_by(name=article['title']).first():
-            print("Had to skip article with name \"" + article['title'] + "\", because it already exists!")
-        else:
-            new_article = Article().from_parsed(article, site.id)
-            db.session.add(new_article)
-    db.session.commit()
-    return jsonify(site.as_dict()), 200
+    if save_articles_from_site(site):
+        return jsonify(site.as_dict()), 200
+    else:
+        return 500
 
 
 @api.route('/site/<name>', methods=['GET'])
 def get_site(name):
-    site = Site.query.filter_by(name=name).first()
-    if site is None:
-        raise WrongParamException('name')
+    """
+    Gets site from its name. Site must be in database. If no name is found throws WrongParamException.
+    :param name: name of site
+    :return: site with status 200
+    """
+    site = get_site_from_name(name)
 
     return jsonify(site.as_dict()), 200
 
@@ -66,17 +62,13 @@ def post_site():
     if body == "":
         raise WrongParamException('website')
 
-    website = Site(name=body['name'], url=body['url'], description=body['description'])
-    db.session.add(website)
-    db.session.commit()
+    add_site(body)
 
     return return_status(200)
 
 
 def return_status(status):
-    return jsonify(status=status), 200
-
-
-def parse_articles(url):
-    html = WebReader().read(url)
-    return RssParser().parse(html)
+    """
+    Returns status in JSON format.
+    """
+    return jsonify(status=status), status
