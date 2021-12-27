@@ -23,7 +23,7 @@ def client():
 
 def test_index(client):
     rv = client.get('/')
-    assert bytes(render_template('index.html'), 'utf-8') in rv.data
+    assert bytes(render_template('base.html'), 'utf-8') in rv.data
 
 
 def test_sites(client):

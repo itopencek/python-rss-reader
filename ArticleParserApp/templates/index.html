@@ -1,4 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Test page</h1>
+<h1 class="main-title">Home page</h1>
+<ul class="no-decoration-ul padding-top">
+    {% if articles %}
+        {% for article in articles %}
+    <li><h3><a href="{{article['url']}}" target="_blank">{{article['name']}}</a></h3><p>{{article['description']}}</p></li>
+        {% endfor %}
+    {% else %}
+    <li>There are no articles. Consider adding new websites!</li>
+    {% endif %}
+
+</ul>
 {% endblock %}
