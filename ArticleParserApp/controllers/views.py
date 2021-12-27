@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 
+from ArticleParserApp.services.site import get_all_sites
 from ArticleParserApp.services.stats import get_most_recent_articles
 
 views = Blueprint('views', __name__)
@@ -13,3 +14,13 @@ def get_home():
     """
     articles = get_most_recent_articles(5)
     return render_template('index.html', articles=articles)
+
+
+@views.route('/sites', methods=['GET'])
+def get_sites():
+    """
+    Renders sites page.
+    :return: rendered site page
+    """
+    sites = get_all_sites()
+    return render_template('sites.html', sites=sites)

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="main-title">All added sites</h1>
+<ul class="no-decoration-ul padding-top">
+    {% if sites %}
+    {% for site in sites %}
+        <li><h3><a href="{{site['url']}}" target="_blank">{{site['name']}}</a></h3>
+            <p>{{site['description']}}</p>
+            <form method="POST" action="/api/site/delete/{{site['id']}}">
+                <button type="submit"></button>
+            </form>
+        </li>
+    {% endfor %}
+    {% else %}
+    <li>There are no articles. Consider adding new websites!</li>
+    {% endif %}
+
+</ul>
+{% endblock %}
