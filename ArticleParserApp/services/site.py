@@ -21,6 +21,8 @@ def add_site(site):
     Adds site to database.
     :param site: dict of site
     """
+    print("Our site")
+    print(site)
     site_to_db = Site(name=site['name'], url=site['url'], description=site['description'])
     db.session.add(site_to_db)
     db.session.commit()

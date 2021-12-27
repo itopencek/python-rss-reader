@@ -59,7 +59,7 @@ def post_site():
     """
     body = request.get_json()
 
-    if body == "":
+    if not body or body == "":
         raise WrongParamException('website')
 
     add_site(body)

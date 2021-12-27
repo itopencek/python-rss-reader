@@ -35,9 +35,6 @@ def create_database():
     Creates and set-ups database and Pandas DataFrame.
     """
     global df_articles
-    app.config['SECRET_KEY'] = 'very secret key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = DB_PATH
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     if not path.exists(DB_NAME):
         db.create_all(app=app)
@@ -50,9 +47,23 @@ def create_database():
     print("Set up pandas DataFrame.")
 
 
-def main():
+def set_config():
+    """
+    Sets basic configuration for app.
+    """
+    app.config['SECRET_KEY'] = 'very secret key'
+    app.config['SQLALCHEMY_DATABASE_URI'] = DB_PATH
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+def main(test_config=None):
     from ArticleParserApp.database.models.models import Site, Article
-    create_database()
+    if test_config is None:
+        set_config()
+        create_database()
+    else:
+        app.config.from_mapping(test_config)
+
     register_exceptions()
     register_blueprints()
     print("Started application.")
