@@ -13,6 +13,9 @@ df_articles = None
 
 
 def register_blueprints():
+    """
+    Registers controllers.
+    """
     from ArticleParserApp.controllers.views import views
     from ArticleParserApp.controllers.api import api
 
@@ -21,10 +24,16 @@ def register_blueprints():
 
 
 def register_exceptions():
+    """
+    Registers exception handler.
+    """
     app.register_blueprint(exception)
 
 
 def create_database():
+    """
+    Creates and set-ups database and Pandas DataFrame.
+    """
     global df_articles
     app.config['SECRET_KEY'] = 'very secret key'
     app.config['SQLALCHEMY_DATABASE_URI'] = DB_PATH

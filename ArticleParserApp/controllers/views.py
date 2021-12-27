@@ -7,6 +7,6 @@ views = Blueprint('views', __name__)
 def get_home():
     """
     Renders home page.
-    :return: home page
+    :return: rendered home page
     """
     return render_template('index.html')
