@@ -1,6 +1,8 @@
+from datetime import datetime
+
 import pandas as pd
 
-from ArticleParserApp import df_articles
+from ArticleParserApp import df_articles, df_sites
 from ArticleParserApp.database.models.models import Article
 
 
@@ -10,16 +12,20 @@ def get_most_recent_articles(num):
     :param num: num of articles to get
     :return: articles
     """
-    return Article.query.order_by(Article.date).limit(num).all()
+    articles = Article.query.order_by(Article.date.desc()).limit(num).all()
+    for article in articles:
+        article.set_date(datetime.fromtimestamp(int(article.get_date())))
+    return articles
 
 
 def get_most_used_words():
     """
     Returns 5 most used words in article names (titles).
-    :return: 5 most used words
+    :return: 5 most used words as dictionary with number of times used
     """
     most_used = pd.Series(' '.join(df_articles['name']).lower().split()).value_counts()[:5]
-    return most_used
+    most_used_dict = dict(zip(most_used.index, most_used))
+    return most_used_dict
 
 
 def get_contains(word, case=False):
@@ -37,4 +43,6 @@ def num_of_articles_by_sites():
     Returns number of articles per site, which are in database.
     :return:
     """
-    return df_articles.groupby(['site_id']).size().to_frame('articles').reset_index()
+    joined_tables = pd.merge(df_articles, df_sites, left_on='site_id', right_on='id')
+    articles = joined_tables.groupby(['name_y']).size().to_frame('articles').reset_index()
+    return articles.values

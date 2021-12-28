@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template
 
 from ArticleParserApp.services.site import get_all_sites
-from ArticleParserApp.services.stats import get_most_recent_articles
+from ArticleParserApp.services.stats import get_most_recent_articles, get_most_used_words, num_of_articles_by_sites
 
 views = Blueprint('views', __name__)
 
 
-@views.route('/', methods=['GET', 'POST'])
+@views.route('/', methods=['GET'])
 def get_home():
     """
     Renders home page.
@@ -33,3 +33,14 @@ def get_add_site():
     :return: rendered add-site page
     """
     return render_template('add-site.html')
+
+
+@views.route('/stats', methods=['GET'])
+def get_stats():
+    """
+    Renders stats page.
+    :return: rendered stats page
+    """
+    most_used_words = get_most_used_words()
+    num_of_articles = num_of_articles_by_sites()
+    return render_template('stats.html', words=most_used_words, articles=num_of_articles)

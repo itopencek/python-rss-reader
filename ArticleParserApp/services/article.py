@@ -14,7 +14,7 @@ def save_articles_from_site(name):
 
     articles = parse_articles(site.url)
     for article in articles:
-        if Article.query.filter_by(name=article['title']).first():
+        if Article.query.filter_by(name=article['title']).first() or Article.query.filter_by(url=article['url']).first():
             print("Had to skip article with name \"" + article['title'] + "\", because it already exists!")
         else:
             new_article = Article().from_parsed(article, site.id)

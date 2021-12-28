@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="main-title">Statistics</h1>
+<h3>Most used words in articles</h3>
+<ul class="no-decoration-ul padding-top">
+    {% for word in words %}
+    <li><p>{{word}}: {{words[word]}}</p></li>
+    {% endfor %}
+</ul>
+<h3>Number of articles by site</h3>
+<ul class="no-decoration-ul padding-top">
+    {% for article in articles %}
+    <li><p>{{article[0]}}: {{article[1]}}</p></li>
+    {% endfor %}
+</ul>
+{% endblock %}

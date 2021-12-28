@@ -32,6 +32,12 @@ class Article(db.Model):
     def as_dict(self):
         return {x.name: getattr(self, x.name) for x in self.__table__.columns}
 
+    def get_date(self):
+        return self.date
+
+    def set_date(self, new_date):
+        self.date = new_date
+
     @staticmethod
     def from_parsed(article, site_id):
         """

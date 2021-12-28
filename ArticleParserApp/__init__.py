@@ -10,6 +10,7 @@ db = SQLAlchemy()
 DB_PATH = 'sqlite:///database/database.db'
 DB_NAME = 'database.db'
 df_articles = None
+df_sites = None
 
 
 def register_blueprints():
@@ -34,7 +35,7 @@ def create_database():
     """
     Creates and set-ups database and Pandas DataFrame.
     """
-    global df_articles
+    global df_articles, df_sites
     db.init_app(app)
     if not path.exists(DB_NAME):
         db.create_all(app=app)
@@ -44,6 +45,7 @@ def create_database():
     # set up pandas df
     with app.app_context():
         df_articles = pd.read_sql('SELECT * FROM article', con=db.engine)
+        df_sites = pd.read_sql('SELECT * FROM site', con=db.engine)
     print("Set up pandas DataFrame.")
 
 
