@@ -1,7 +1,6 @@
 from flask import Blueprint, jsonify, request
 
 from ArticleParserApp.database.models.exceptions.api import WrongParamException
-from ArticleParserApp.database.models.models import Site
 from ArticleParserApp.services.article import save_articles_from_site, get_articles_from_site
 from ArticleParserApp.services.site import get_site_from_name, add_site, remove_site_by_id
 
@@ -26,16 +25,11 @@ def save_articles(name):
     """
     Saves articles from site to database.
     :param name: site name to use
-    :return: site with status 200
     """
-    site = Site.query.filter_by(name=name).first()
-    if site is None:
-        raise WrongParamException('name')
-
-    if save_articles_from_site(site):
-        return jsonify(site.as_dict()), 200
+    if save_articles_from_site(name):
+        return return_status(200)
     else:
-        return 500
+        return return_status(500)
 
 
 @api.route('/site/<name>', methods=['GET'])
@@ -62,18 +56,17 @@ def post_site():
     if not body or body == "":
         raise WrongParamException('site')
 
+    print(body)
     add_site(body)
 
     return return_status(200)
 
 
-@api.route('/site/delete/<site_id>', methods=['POST'])
+@api.route('/site/delete/<site_id>', methods=['DELETE'])
 def delete_site(site_id):
     """
     Removes site from database.
     Must be valid.
-    NOTE: HTML5 forms do NOT support DELETE and PUT methods.
-    https://stackoverflow.com/a/4052011
     :param site_id: id of site
     """
     if not site_id or site_id == "":

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pandas
 import xml.etree.ElementTree as ElementTree
 
@@ -41,10 +43,11 @@ class RssParser(Parser):
         source = channel.find("link").text
         for item in channel.findall("item"):
             title = item.find('title').text
-            published = item.find('pubDate').text
+            date_time_str = item.find('pubDate').text
+            published_epoch = datetime.strptime(date_time_str, '%a, %d %b %Y %H:%M:%S %z').strftime('%s')
             description = item.find('description').text
             url = item.find('link').text
-            row = {'id': self.__next_id(), 'title': title, 'description': description, 'published': published,
+            row = {'id': self.__next_id(), 'title': title, 'description': description, 'published': published_epoch,
                    'url': url, 'source': source}
             data_frame = data_frame.append(row, ignore_index=True)
 

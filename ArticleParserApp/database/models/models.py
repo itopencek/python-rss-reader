@@ -7,8 +7,9 @@ class Site(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
-    url = db.Column(db.String, unique=True, nullable=False)
+    url = db.Column(db.String, unique=False, nullable=False)
     description = db.Column(db.String, unique=False, nullable=True)
+    language = db.Column(db.String, unique=False, nullable=False)
     articles = db.relationship('Article', backref='site', lazy=True)
 
     def as_dict(self):
@@ -24,6 +25,7 @@ class Article(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String, nullable=True)
     image_url = db.Column(db.String, nullable=True)
+    # date is saved as EPOCH in String
     date = db.Column(db.String, nullable=False)
     site_id = db.Column(db.Integer, db.ForeignKey('site.id'), nullable=False)
 

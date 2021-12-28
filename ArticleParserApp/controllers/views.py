@@ -24,3 +24,12 @@ def get_sites():
     """
     sites = get_all_sites()
     return render_template('sites.html', sites=sites)
+
+
+@views.route('/add-site', methods=['GET'])
+def get_add_site():
+    """
+    Renders add-site page.
+    :return: rendered add-site page
+    """
+    return render_template('add-site.html')

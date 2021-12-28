@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="main-title">Add site</h1>
+<ul class="no-decoration-ul padding-top">
+    <form>
+        <input type="text" name="site" placeholder="Site name">
+        <input type="text" name="url" placeholder="Site url">
+        <input type="text" name="description" placeholder="Site description">
+        <input type="text" name="language" placeholder="Site language">
+        <button class="btn btn-primary" onclick="addSite(site.value, url.value, description.value, language.value)" type="button">Add site</button>
+    </form>
+</ul>
+{% endblock %}

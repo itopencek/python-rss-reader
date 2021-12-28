@@ -7,7 +7,8 @@
         <li><h3><a href="{{site['url']}}" target="_blank">{{site['name']}}</a></h3>
             <p>{{site['description']}}</p>
             <form method="POST" action="/api/site/delete/{{site['id']}}">
-                <button type="submit"></button>
+                <button type="button" class="btn btn-secondary" onclick="createRequest('/api/site/delete/{{site.id}}', 'DELETE')">Remove site</button>
+                <button type="button" class="btn btn-primary" onclick="createRequest('/api/articles/{{site.name}}', 'PUT')">Get articles</button>
             </form>
         </li>
     {% endfor %}
