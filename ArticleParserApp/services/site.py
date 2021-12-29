@@ -1,6 +1,6 @@
-from ArticleParserApp import db
+from ArticleParserApp import db, load_pandas_df
 from ArticleParserApp.database.models.exceptions.api import WrongParamException
-from ArticleParserApp.database.models.models import Site
+from ArticleParserApp.database.models.models import Site, Article
 
 
 def get_site_from_name(name):
@@ -32,7 +32,9 @@ def remove_site_by_id(site_id):
     :param site_id: id of site
     """
     Site.query.filter_by(id=site_id).delete()
+    Article.query.filter_by(site_id=site_id).delete()
     db.session.commit()
+    load_pandas_df()
 
 
 def remove_site_by_name(name):
@@ -40,8 +42,11 @@ def remove_site_by_name(name):
     Removes site from database.
     :param name: name of site
     """
+    site = Site.query.filter_by(name=name).first()
+    Article.query.filter_by(site_id=site['id']).delete()
     Site.query.filter_by(name=name).delete()
     db.session.commit()
+    load_pandas_df()
 
 
 def get_all_sites():

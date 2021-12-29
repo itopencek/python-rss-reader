@@ -1,4 +1,4 @@
-from ArticleParserApp import db
+from ArticleParserApp import db, load_pandas_df
 from ArticleParserApp.database.models.models import Article
 from ArticleParserApp.parser.parser import RssParser
 from ArticleParserApp.parser.reader import WebReader
@@ -20,6 +20,8 @@ def save_articles_from_site(name):
             new_article = Article().from_parsed(article, site.id)
             db.session.add(new_article)
     db.session.commit()
+    # update pandas df to reflect new changes
+    load_pandas_df()
     return True
 
 

@@ -6,14 +6,15 @@ import pandas as pd
 from ArticleParserApp import df_articles, df_sites
 
 
-def get_most_recent_articles(num):
+def get_most_recent_articles(limit=5, offset=0):
     """
     Returns most recent articles up to the given number.
-    :param num: num of articles to get
+    :param limit: max number of articles
+    :param offset: offset articles
     :return: articles
     """
     joined_tables = pd.merge(df_articles, df_sites, left_on='site_id', right_on='id') \
-        .sort_values('date', ascending=False).head(num)
+        .sort_values('date', ascending=False).iloc[offset:limit + offset]
 
     # convert date to readable format
     joined_tables['date'] = joined_tables['date'].apply(lambda date: datetime.fromtimestamp(int(date)))
@@ -49,7 +50,6 @@ def num_of_articles_by_sites():
     """
     joined_tables = pd.merge(df_articles, df_sites, left_on='site_id', right_on='id')
     articles = joined_tables.groupby(['name_y']).size().to_frame('articles').reset_index()
-    print(articles)
     return articles.values
 
 

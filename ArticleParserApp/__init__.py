@@ -42,11 +42,11 @@ def create_database():
     else:
         print('Database already exists.')
     # set up pandas df
-    set_up_pandas()
+    load_pandas_df()
     print("Set up pandas DataFrame.")
 
 
-def set_up_pandas():
+def load_pandas_df():
     """
     Function to load pandas DataFrames.
     """
