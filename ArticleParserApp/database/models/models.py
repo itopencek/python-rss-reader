@@ -47,4 +47,4 @@ class Article(db.Model):
         :return: new Article object
         """
         return Article(url=article['url'], name=article['title'], description=article['description'],
-                       image_url=None, date=article['published'], site_id=site_id)
+                       image_url=article['image_url'], date=article['published'], site_id=site_id)

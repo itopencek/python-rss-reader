@@ -20,6 +20,7 @@ def save_articles_from_site(name):
             new_article = Article().from_parsed(article, site.id)
             db.session.add(new_article)
     db.session.commit()
+    return True
 
 
 def get_articles_from_site(site):

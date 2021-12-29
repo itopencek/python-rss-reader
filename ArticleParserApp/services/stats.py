@@ -3,7 +3,6 @@ from datetime import datetime
 import pandas as pd
 
 from ArticleParserApp import df_articles, df_sites
-from ArticleParserApp.database.models.models import Article
 
 
 def get_most_recent_articles(num):
@@ -12,10 +11,12 @@ def get_most_recent_articles(num):
     :param num: num of articles to get
     :return: articles
     """
-    articles = Article.query.order_by(Article.date.desc()).limit(num).all()
-    for article in articles:
-        article.set_date(datetime.fromtimestamp(int(article.get_date())))
-    return articles
+    joined_tables = pd.merge(df_articles, df_sites, left_on='site_id', right_on='id') \
+        .sort_values('date', ascending=False).head(num)
+
+    # convert date to readable format
+    joined_tables['date'] = joined_tables['date'].apply(lambda date: datetime.fromtimestamp(int(date)))
+    return joined_tables.to_dict('records')
 
 
 def get_most_used_words():

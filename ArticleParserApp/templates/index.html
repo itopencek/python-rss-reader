@@ -4,9 +4,15 @@
 <ul class="no-decoration-ul padding-top">
     {% if articles %}
         {% for article in articles %}
-    <li><h3><a href="{{article['url']}}" target="_blank">{{article['name']}}</a></h3>
-        {{article['date']}}
-        <p>{{article['description']}}</p></li>
+    <li class="article"><h3><a href="{{article['url_x']}}" target="_blank">{{article['name_x']}}</a></h3>
+        <div class="article-body">
+            <img src="{{article['image_url']}}" width="200" height="150">
+            <div class="article-text">
+                <span>{{article['date']}} | {{article['description_y']}}</span><span>{{article['name_x']}}</span>
+                <p>{{article['description_x']}}</p>
+            </div>
+        </div>
+    </li>
         {% endfor %}
     {% else %}
     <li>There are no articles. Consider adding new websites!</li>

@@ -28,7 +28,7 @@ class RssParser(Parser):
 
         :return: Pandas data frame
         """
-        return pandas.DataFrame(columns=['id', 'title', 'published', 'description', 'url', 'source'])
+        return pandas.DataFrame(columns=['id', 'title', 'published', 'description', 'url', 'source', 'image_url'])
 
     def parse(self, data):
         """
@@ -43,12 +43,14 @@ class RssParser(Parser):
         source = channel.find("link").text
         for item in channel.findall("item"):
             title = item.find('title').text
+            # date to epoch
             date_time_str = item.find('pubDate').text
             published_epoch = datetime.strptime(date_time_str, '%a, %d %b %Y %H:%M:%S %z').strftime('%s')
             description = item.find('description').text
             url = item.find('link').text
+            image_url = str(item.find('enclosure').attrib['url'])
             row = {'id': self.__next_id(), 'title': title, 'description': description, 'published': published_epoch,
-                   'url': url, 'source': source}
+                   'url': url, 'source': source, 'image_url': image_url}
             data_frame = data_frame.append(row, ignore_index=True)
 
         return data_frame.to_dict(orient="records")

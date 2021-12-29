@@ -28,7 +28,7 @@ def test_index(client):
 
 def test_sites(client):
     client.post('/api/site', json={
-        'name': 'test', 'url': 'https://www.sme.sk/rss-title', 'description': 'Test description.'
+        'name': 'test', 'url': 'https://www.sme.sk/rss-title', 'description': 'Test description.', 'language': 'sk'
     })
 
     rv = client.get('/api/site/test')
@@ -36,6 +36,7 @@ def test_sites(client):
     assert b'"id":1' in rv.data
     assert b'"url":"https://www.sme.sk/rss-title"' in rv.data
     assert b'"description":"Test description."' in rv.data
+    assert b'"language":"sk"' in rv.data
 
 
 def test_site_empty(client):
