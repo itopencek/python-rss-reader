@@ -20,7 +20,6 @@ def save_articles_from_site(name):
             new_article = Article().from_parsed(article, site.id)
             db.session.add(new_article)
     db.session.commit()
-    # update pandas df to reflect new changes
     load_pandas_df()
     return True
 
