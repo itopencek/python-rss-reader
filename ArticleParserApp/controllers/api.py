@@ -56,7 +56,6 @@ def post_site():
     if not body or body == "":
         raise WrongParamException('site')
 
-    print(body)
     add_site(body)
 
     return return_status(200)

@@ -13,7 +13,6 @@ def get_home():
     :return: rendered home page
     """
     articles = get_most_recent_articles(5)
-    print(articles)
     return render_template('index.html', articles=articles)
 
 

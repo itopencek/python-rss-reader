@@ -4,7 +4,7 @@
 <ul class="no-decoration-ul padding-top">
     {% if sites %}
     {% for site in sites %}
-        <li><h3><a href="{{site['url']}}" target="_blank">{{site['name']}}</a></h3>
+        <li class="site"><h3><a href="{{site['url']}}" target="_blank">{{site['name']}}</a></h3>
             <p>{{site['description']}}</p>
             <form method="POST" action="/api/site/delete/{{site['id']}}">
                 <button type="button" class="btn btn-secondary" onclick="createRequest('/api/site/delete/{{site.id}}', 'DELETE')">Remove site</button>
