@@ -49,6 +49,7 @@ def num_of_articles_by_sites():
     """
     joined_tables = pd.merge(df_articles, df_sites, left_on='site_id', right_on='id')
     articles = joined_tables.groupby(['name_y']).size().to_frame('articles').reset_index()
+    print(articles)
     return articles.values
 
 

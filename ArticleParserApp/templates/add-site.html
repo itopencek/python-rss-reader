@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
+<button type="button" id="sidebarCollapse" class="btn btn-secondary">
+    <i class="fas fa-align-left"></i>
+</button>
+
 <h1 class="main-title">Add site</h1>
 <ul class="no-decoration-ul padding-top">
     <form>
-        <input type="text" name="site" placeholder="Site name"><br>
-        <input type="text" name="url" placeholder="Site url"><br>
-        <input type="text" name="description" placeholder="Site description"><br>
-        <input type="text" name="language" placeholder="Site language"><br>
+        <input class="form-control" type="text" name="site" placeholder="Site name"><br>
+        <input class="form-control" type="text" name="url" placeholder="Site url"><br>
+        <input class="form-control" type="text" name="description" placeholder="Site description"><br>
+        <input class="form-control" type="text" name="language" placeholder="Site language"><br>
         <button class="btn btn-primary" onclick="addSite(site.value, url.value, description.value, language.value)" type="button">Add site</button>
     </form>
 </ul>

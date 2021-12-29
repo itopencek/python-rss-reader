@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
+<button type="button" id="sidebarCollapse" class="btn btn-secondary">
+    <i class="fas fa-align-left"></i>
+</button>
+
 <h1 class="main-title">All added sites</h1>
 <ul class="no-decoration-ul padding-top">
     {% if sites %}

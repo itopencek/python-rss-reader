@@ -1,14 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
+<button type="button" id="sidebarCollapse" class="btn btn-secondary">
+    <i class="fas fa-align-left"></i>
+</button>
+
 <h1 class="main-title">Home page</h1>
 <ul class="no-decoration-ul padding-top">
     {% if articles %}
         {% for article in articles %}
     <li class="article"><h3><a href="{{article['url_x']}}" target="_blank">{{article['name_x']}}</a></h3>
         <div class="article-body">
+            {% if article['image_url'] != "" %}
             <img src="{{article['image_url']}}" width="200" height="150">
+            {% endif %}
             <div class="article-text">
-                <span>{{article['date']}} | {{article['description_y']}}</span><span>{{article['name_x']}}</span>
+                <span>{{article['date']}} | {{article['description_y']|safe}}</span><span>{{article['name_x']}}</span>
                 <p>{{article['description_x']}}</p>
             </div>
         </div>

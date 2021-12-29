@@ -35,7 +35,6 @@ def create_database():
     """
     Creates and set-ups database and Pandas DataFrame.
     """
-    global df_articles, df_sites
     db.init_app(app)
     if not path.exists(DB_NAME):
         db.create_all(app=app)
@@ -43,10 +42,18 @@ def create_database():
     else:
         print('Database already exists.')
     # set up pandas df
+    set_up_pandas()
+    print("Set up pandas DataFrame.")
+
+
+def set_up_pandas():
+    """
+    Function to load pandas DataFrames.
+    """
+    global df_articles, df_sites
     with app.app_context():
         df_articles = pd.read_sql('SELECT * FROM article', con=db.engine)
         df_sites = pd.read_sql('SELECT * FROM site', con=db.engine)
-    print("Set up pandas DataFrame.")
 
 
 def set_config():

@@ -3,6 +3,8 @@ from datetime import datetime
 import pandas
 import xml.etree.ElementTree as ElementTree
 
+from jinja2 import Markup
+
 
 class Parser:
     def parse(self, data):
@@ -45,10 +47,17 @@ class RssParser(Parser):
             title = item.find('title').text
             # date to epoch
             date_time_str = item.find('pubDate').text
-            published_epoch = datetime.strptime(date_time_str, '%a, %d %b %Y %H:%M:%S %z').strftime('%s')
-            description = item.find('description').text
+            try:
+                published_epoch = datetime.strptime(date_time_str, '%a, %d %b %Y %H:%M:%S %z').strftime('%s')
+            except ValueError:
+                published_epoch = datetime.now().strptime(date_time_str, '%a, %d %b %Y %H:%M:%S %Z').strftime('%s')
+            # remove all html tags because there are images sometimes
+            description = Markup(item.find('description').text).striptags()
             url = item.find('link').text
-            image_url = str(item.find('enclosure').attrib['url'])
+            try:
+                image_url = str(item.find('enclosure').attrib['url'])
+            except AttributeError:
+                image_url = ""
             row = {'id': self.__next_id(), 'title': title, 'description': description, 'published': published_epoch,
                    'url': url, 'source': source, 'image_url': image_url}
             data_frame = data_frame.append(row, ignore_index=True)
