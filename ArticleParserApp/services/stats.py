@@ -6,6 +6,16 @@ import pandas as pd
 from ArticleParserApp import df_articles, df_sites
 
 
+def get_num_of_articles():
+    """
+    Returns number of articles in database or if the number is greater than 35, returns 35.
+    """
+    if df_articles.shape[0] > 35:
+        return 35
+    else:
+        return df_articles.shape[0]
+
+
 def get_most_recent_articles(limit=5, offset=0):
     """
     Returns most recent articles up to the given number.

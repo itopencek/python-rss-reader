@@ -111,6 +111,14 @@ ul ul a {
     margin-top: 15px;
 }
 
+.pagination-bottom {
+    margin-top: 20px;
+}
+
+.center {
+    justify-content: center;
+}
+
 @media (max-width: 768px) {
     #sidebar {
         margin-left: -250px;
