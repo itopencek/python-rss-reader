@@ -66,9 +66,9 @@ def num_of_articles_by_sites():
 def get_excluded_words():
     """
     Returns list of words, which should not be in most used words.
-    Reads list from file database/words.txt.
+    Reads list from file database/excluded-words.txt.
     """
-    with open("database/words.txt", "r") as f:
+    with open("database/excluded-words.txt", "r") as f:
         words = [x[:-1] for x in f.readlines()]
 
     return words
