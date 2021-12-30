@@ -1,6 +1,6 @@
 .idea/
 ArticleParserApp/.pytest_cache
-tests/.pytest_cache
+ArticleParserApp/test/.pytest_cache
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

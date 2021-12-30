@@ -22,14 +22,21 @@ def client():
 
 
 def test_index(client):
-    rv = client.get('/')
-    assert bytes(render_template('base.html'), 'utf-8') in rv.data
-
-
-def test_sites(client):
     client.post('/api/site', json={
         'name': 'test', 'url': 'https://www.sme.sk/rss-title', 'description': 'Test description.', 'language': 'sk'
     })
+
+    rv = client.get('/')
+    assert bytes(render_template('index.html', articles=[
+        {'name': 'test', 'url': 'https://www.sme.sk/rss-title', 'description': 'Test description.', 'language': 'sk'}],
+                                 data={'max': 0, 'limit': 5, 'page': 1}), 'utf-8') in rv.data
+
+
+def test_sites(client):
+    rv_post = client.post('/api/site', json={
+        'name': 'test', 'url': 'https://www.sme.sk/rss-title', 'description': 'Test description.', 'language': 'sk'
+    })
+    assert b'"status":200' in rv_post.data
 
     rv = client.get('/api/site/test')
     assert b'"name":"test"' in rv.data

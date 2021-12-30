@@ -1,17 +1,16 @@
 from http.client import HTTPException
 from urllib.error import HTTPError, URLError
 
-from urllib.request import urlopen
-
 
 class Reader:
     """
     Abstract class to read data from specific source and then returning it.
     """
-    def read(self, src):
+    def read(self, urlopen, src):
         """
         Reads data from source, which it then returns.
 
+        :param urlopen: method to read url
         :param src: source to read data from
         :return: read data
         """
@@ -23,9 +22,10 @@ class WebReader(Reader):
     Reads and returns web pages.
     """
 
-    def read(self, src):
+    def read(self, urlopen, src):
         """
         Reads and returns specific website.
+        :param urlopen: method to read url
         :param src: source website
         :return: HttpResponse with website
         """

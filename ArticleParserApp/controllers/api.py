@@ -76,7 +76,6 @@ def delete_site(site_id):
     return return_status(200)
 
 
-# TODO check the return statement
 def return_status(status):
     """
     Returns status in JSON format.

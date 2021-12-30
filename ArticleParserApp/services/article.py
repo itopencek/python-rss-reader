@@ -1,3 +1,5 @@
+from urllib.request import urlopen
+
 from ArticleParserApp import db, load_pandas_df
 from ArticleParserApp.database.models.models import Article
 from ArticleParserApp.parser.parser import RssParser
@@ -14,7 +16,8 @@ def save_articles_from_site(name):
 
     articles = parse_articles(site.url)
     for article in articles:
-        if Article.query.filter_by(name=article['title']).first() or Article.query.filter_by(url=article['url']).first():
+        if Article.query.filter_by(name=article['title']).first() or \
+                Article.query.filter_by(url=article['url']).first():
             print("Had to skip article with name \"" + article['title'] + "\", because it already exists!")
         else:
             new_article = Article().from_parsed(article, site.id)
@@ -39,5 +42,5 @@ def parse_articles(url):
     :param url: url to RSS file
     :return: read and parsed articles
     """
-    html = WebReader().read(url)
+    html = WebReader().read(urlopen, url)
     return RssParser().parse(html)
