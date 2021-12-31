@@ -25,6 +25,7 @@ def save_articles(name):
     """
     Saves articles from site to database.
     :param name: site name to use
+    :return: status 200 if there is no problem, status 500 if there is error
     """
     if save_articles_from_site(name):
         return return_status(200)
@@ -49,7 +50,7 @@ def post_site():
     """
     Adds site to database.
     Must be valid.
-    :return:
+    :return: status 200
     """
     body = request.get_json()
 

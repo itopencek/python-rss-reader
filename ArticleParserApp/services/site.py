@@ -31,6 +31,8 @@ def remove_site_by_id(site_id):
     Removes site from database.
     :param site_id: id of site
     """
+    if not Site.query.filter_by(id=site_id).first():
+        raise WrongParamException('site_id')
     Site.query.filter_by(id=site_id).delete()
     Article.query.filter_by(site_id=site_id).delete()
     db.session.commit()

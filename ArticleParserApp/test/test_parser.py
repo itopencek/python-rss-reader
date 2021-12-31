@@ -19,7 +19,7 @@ expected_rss = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rss version=\"2.0\"
 class MockUrlopen:
     @staticmethod
     def read():
-        with open('test/resources/sme.xml', 'rb') as f:
+        with open('resources/sme.xml', 'rb') as f:
             lines = f.read()
             return lines
 

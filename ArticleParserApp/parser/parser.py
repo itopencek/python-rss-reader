@@ -3,7 +3,7 @@ from datetime import datetime
 import pandas
 import xml.etree.ElementTree as ElementTree
 
-from jinja2 import Markup
+from markupsafe import Markup
 
 
 class Parser:
