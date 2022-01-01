@@ -39,7 +39,9 @@ http://localhost:5000
 ### About project
 
 This web app should have simple interface (website). On the main page, you can see parsed articles (up to 7 pages of them).
-You also have pages to show/delete sites (from which the articles can be parsed) and add new site. There is an additional webpage about simple statistics. If you want to display correct statistics, you may need to restart your server if you added new sites or parsed articles.
+You also have pages to show/delete sites (from which the articles can be parsed) and add new site. There is an additional webpage showing simple statistics.
+
+Database is also filled with different sites (in czech, slovak and english) and their respective articles - just to showcase everything.
 
 Hopefully, everything is understandable from the code itself. Everything should also be explained in comments. If there are any problems feel free to contact me.
 
