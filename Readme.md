@@ -52,3 +52,6 @@ Go to `ArticleParserApp/test` and run pytest.
 ```
 semestral_work/ArticleParserApp/test> pytest-3
 ```
+
+
+by Ivan Havasi
