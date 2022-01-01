@@ -7,7 +7,7 @@ from flask import render_template
 
 from ArticleParserApp import main, create_database, app, db
 
-# Testing controllers with their services - simple integration tests
+# Testing controllers with their services - simple integration-like tests
 from ArticleParserApp.services.stats import get_num_of_articles, get_most_recent_articles, get_most_used_words, \
     get_contains, num_of_articles_by_sites
 

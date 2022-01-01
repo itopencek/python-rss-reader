@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
 
+from ArticleParserApp import load_pandas_df
 from ArticleParserApp.services.site import get_all_sites
 from ArticleParserApp.services.stats import get_most_recent_articles, get_most_used_words, num_of_articles_by_sites, \
     get_num_of_articles
@@ -33,7 +34,9 @@ def get_home():
     if ((page - 1) * limit) + 1 > max_articles:
         page = 1
 
-    articles = get_most_recent_articles(limit, ((page - 1) * limit))
+    # load updated articles and sites
+    df_a, df_s = load_pandas_df()
+    articles = get_most_recent_articles(limit, ((page - 1) * limit), df=df_a, df_s=df_s)
     return render_template('index.html', articles=articles, data={'max': max_articles, 'limit': limit,
                                                                   'page': page})
 
@@ -63,6 +66,9 @@ def get_stats():
     Renders stats page.
     :return: rendered stats page
     """
-    most_used_words = get_most_used_words()
-    num_of_articles = num_of_articles_by_sites()
+    # load updated articles and sites
+    df_a, df_s = load_pandas_df()
+    print(df_a)
+    most_used_words = get_most_used_words(df=df_a)
+    num_of_articles = num_of_articles_by_sites(df=df_a, df_s=df_s)
     return render_template('stats.html', words=most_used_words, articles=num_of_articles)

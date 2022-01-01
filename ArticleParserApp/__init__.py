@@ -49,11 +49,13 @@ def create_database():
 def load_pandas_df():
     """
     Function to load pandas DataFrames.
+    :return: loaded pandas articles and sites
     """
     global df_articles, df_sites
     with app.app_context():
         df_articles = pd.read_sql('SELECT * FROM article', con=db.engine)
         df_sites = pd.read_sql('SELECT * FROM site', con=db.engine)
+        return df_articles, df_sites
 
 
 def set_config():

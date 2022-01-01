@@ -28,7 +28,7 @@ def get_most_recent_articles(limit=5, offset=0, df=df_articles, df_s=df_sites):
     :param offset: offset articles
     :return: articles
     """
-    if df is None:
+    if df is None or len(df) == 0:
         return
 
     joined_tables = pd.merge(df, df_s, left_on='site_id', right_on='id') \
@@ -44,7 +44,7 @@ def get_most_used_words(df=df_articles, exclude=True):
     Returns 5 most used words in article names (titles).
     :return: 5 most used words as dictionary with number of times used
     """
-    if df is None:
+    if df is None or len(df) == 0:
         return []
 
     most_used = pd.Series(' '.join(df['name']).lower().split()).value_counts()
@@ -72,7 +72,7 @@ def num_of_articles_by_sites(df=df_articles, df_s=df_sites):
     """
     Returns number of articles per site, which are in database.
     """
-    if df is None:
+    if df is None or len(df) == 0:
         return []
 
     joined_tables = pd.merge(df, df_s, left_on='site_id', right_on='id')
